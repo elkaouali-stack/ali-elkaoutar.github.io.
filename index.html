@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ali El Kaoutar — e-Portfolio</title>
+<meta name="description" content="e-Portfolio d'Ali El Kaoutar, élève ingénieur en Sciences du Numérique à l'ENSEEIHT : parcours, projets, compétences, CV FR/EN.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%232997ff'/%3E%3Ctext x='16' y='21' font-size='14' font-family='Arial' font-weight='700' text-anchor='middle' fill='white'%3EAE%3C/text%3E%3C/svg%3E">
+<style>
+  :root, [data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0b0d11;
+    --surface: #13161c;
+    --elev: #1a1e26;
+    --text: #f3f5f9;
+    --muted: #a9b0bd;
+    --accent: #2997ff;
+    --route: #34c6d8;
+    --route-soft: rgba(52, 198, 216, .32);
+    --border: rgba(255, 255, 255, .1);
+    --shadow: 0 24px 60px rgba(0, 0, 0, .35);
+    --nav-bg: rgba(13, 15, 20, .82);
+    --radius: 18px;
+  }
+  [data-theme="light"] {
+    color-scheme: light;
+    --bg: #f7f8fb;
+    --surface: #ffffff;
+    --elev: #ffffff;
+    --text: #1b1d22;
+    --muted: #666b75;
+    --accent: #0a6fd8;
+    --route: #0f7c8c;
+    --route-soft: rgba(15, 124, 140, .28);
+    --border: rgba(0, 0, 0, .11);
+    --shadow: 0 20px 50px rgba(20, 30, 50, .08);
+    --nav-bg: rgba(247, 248, 251, .86);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button, select { font: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 18px; }
+
+  /* ---- Navigation ---- */
+  .nav { position: sticky; top: 0; z-index: 50; background: var(--nav-bg); backdrop-filter: saturate(180%) blur(14px); -webkit-backdrop-filter: saturate(180%) blur(14px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1120px; margin: 0 auto; padding: 10px 14px; display: flex; align-items: center; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; white-space: nowrap; color: var(--text); }
+  .brand:hover { text-decoration: none; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(145deg, var(--accent), var(--route)); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 18%, transparent); }
+  #menu { margin-left: auto; }
+  #menu ul { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
+  #menu a { position: relative; display: block; padding: 9px 12px; color: var(--text); border-radius: 10px; }
+  #menu a:hover { text-decoration: none; }
+  #menu a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 5px; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+  #menu a:hover::after, #menu a.active::after { transform: scaleX(1); }
+  .ctrls { display: flex; align-items: center; gap: 8px; }
+  .burger { display: none; width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--border); background: var(--elev); color: var(--text); cursor: pointer; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 15px; border-radius: 999px; border: 1px solid var(--border); background: var(--elev); color: var(--text); cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; white-space: nowrap; }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.22); }
+  .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn.square { width: 40px; height: 40px; padding: 0; }
+  .btn svg { width: 17px; height: 17px; flex: none; }
+  select { padding: 8px 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--elev); color: var(--text); cursor: pointer; }
+
+  /* ---- Composants ---- */
+  .section { padding: 14px 0; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); font-size: 14px; }
+  .chip.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--route); }
+  h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.06; margin: 14px 0 10px; letter-spacing: -.02em; }
+  h2 { font-size: clamp(21px, 3.6vw, 28px); line-height: 1.2; margin: 0 0 12px; letter-spacing: -.01em; }
+  h3 { font-size: 19px; margin: 0 0 6px; }
+  .lead { font-size: clamp(16px, 2.6vw, 19px); color: var(--muted); margin: 0 0 18px; }
+  .muted { color: var(--muted); }
+  .small { font-size: 14px; color: var(--muted); }
+  .grid { display: grid; gap: 16px; }
+  .grid > * { min-width: 0; }
+  .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* ---- Accueil ---- */
+  .hero { position: relative; isolation: isolate; padding-top: 28px; }
+  .hero::before { content: ""; position: absolute; z-index: -1; inset: 0 0 auto; height: 260px; border-radius: 40px; background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 22%, transparent), color-mix(in srgb, var(--route) 16%, transparent)); filter: blur(28px); pointer-events: none; }
+  .hero .card { display: flex; flex-direction: column; }
+  .hero .about p { margin: 0 0 12px; color: var(--muted); }
+
+  /* ---- Carte TSP ---- */
+  .map { background: var(--elev); border: 1px solid var(--border); border-radius: 14px; padding: 10px; margin-top: 4px; }
+  .map svg { display: block; width: 100%; height: auto; }
+  .city circle { fill: var(--text); opacity: .85; }
+  .city text { font-size: 11px; fill: var(--muted); }
+  .city.home circle { fill: var(--route); opacity: 1; }
+  .city.home text { fill: var(--text); font-weight: 700; }
+  .tour { fill: none; stroke: var(--route); stroke-width: 2.2; stroke-linejoin: round; }
+  .tour.draft { stroke: var(--route-soft); stroke-width: 1.5; stroke-dasharray: 4 4; }
+  .swap { stroke: var(--accent); stroke-width: 3; }
+  .readout { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .km { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .km small { font-size: 14px; font-weight: 400; color: var(--muted); }
+
+  /* ---- Frise ---- */
+  .tl { position: relative; padding-left: 26px; margin-top: 8px; }
+  .tl::before { content: ""; position: absolute; left: 9px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(var(--accent), transparent); }
+  .tli { position: relative; background: var(--elev); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 14px; }
+  .tli:last-child { margin-bottom: 0; }
+  .tli::before { content: ""; position: absolute; left: -22px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .tli .when { font-size: 14px; color: var(--accent); font-weight: 600; }
+  .tli h3 { margin: 2px 0 4px; }
+  .tli p { margin: 0; color: var(--muted); }
+
+  /* ---- Projets ---- */
+  .project { align-items: center; }
+  .cover { aspect-ratio: 16 / 10; border-radius: 14px; border: 1px solid var(--border); background: var(--elev); overflow: hidden; }
+  .cover svg { width: 100%; height: 100%; display: block; }
+  .project ul { margin: 12px 0 0; padding-left: 1.1em; color: var(--muted); }
+  .project li { margin-bottom: 6px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+  /* ---- Compétences ---- */
+  .skill-group + .skill-group { margin-top: 16px; }
+  .skill-group h3 { font-size: 15px; color: var(--muted); font-weight: 600; margin-bottom: 8px; }
+  .skill-group .tags { margin-top: 0; }
+  .skill-group .chip { color: var(--text); }
+
+  footer { padding: 36px 14px 44px; text-align: center; color: var(--muted); }
+  footer .actions { justify-content: center; margin-top: 10px; }
+
+  /* ---- Apparition ---- */
+  @media (prefers-reduced-motion: no-preference) {
+    .fade { opacity: 0; transform: translateY(10px); transition: opacity .6s ease, transform .6s ease; }
+    .fade.show { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .btn, #menu a::after { transition: none; }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 960px) { .cols-2 { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 860px) {
+    .nav-inner { flex-wrap: wrap; }
+    .burger { display: inline-flex; align-items: center; justify-content: center; }
+    .ctrls { margin-left: auto; }
+    #menu { display: none; order: 3; flex: 0 0 100%; margin: 0; }
+    #menu.open { display: block; }
+    #menu ul { flex-direction: column; gap: 6px; padding: 8px 0 4px; }
+    #menu a { border: 1px solid var(--border); background: var(--elev); }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 16px; }
+    .card { padding: 18px; }
+    .ctrls .cv-nav { display: none; }
+    .city text { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#home"><span class="dot" aria-hidden="true"></span>Ali El Kaoutar</a>
+    <nav id="menu" aria-label="Principale">
+      <ul>
+        <li><a href="#home" data-i18n="nHome">Accueil</a></li>
+        <li><a href="#parcours" data-i18n="nPath">Parcours</a></li>
+        <li><a href="#projets" data-i18n="nProj">Projets</a></li>
+        <li><a href="#competences" data-i18n="nSkills">Compétences</a></li>
+        <li><a href="#sports" data-i18n="nSport">Sports</a></li>
+      </ul>
+    </nav>
+    <div class="ctrls">
+      <a class="btn primary cv-nav" id="cvNav" href="assets/CV_Ali_EL_KAOUTAR_FR.pdf" download>CV (FR)</a>
+      <button class="btn square" id="themeBtn" type="button" aria-label="Basculer le thème">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
+      </button>
+      <select id="langSel" aria-label="Langue">
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+      </select>
+      <button class="burger" id="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- Accueil -->
+  <section id="home" class="section hero">
+    <div class="grid cols-2">
+      <div class="card fade">
+        <span class="chip" data-i18n="chip">Élève ingénieur · ENSEEIHT, Sciences du Numérique</span>
+        <h1>Ali El Kaoutar</h1>
+        <p class="lead" data-i18n="intro">Étudiant en 1re année d'école d'ingénieur à Toulouse, passionné par l'intelligence artificielle et la cybersécurité.</p>
+        <div class="about">
+          <p data-i18n="about1">Après mon baccalauréat, j'ai suivi deux années de classes préparatoires au Maroc. Ce parcours m'a donné de solides bases en mathématiques et en physique, et m'a appris à travailler avec rigueur et autonomie, y compris sous pression.</p>
+          <p data-i18n="about2">L'IA et la cybersécurité s'influencent de plus en plus : l'IA transforme la manière dont les systèmes sont défendus et attaqués, et leur sécurisation devient essentielle à mesure qu'ils s'installent dans notre quotidien.</p>
+        </div>
+        <div class="actions" style="margin-top:auto;padding-top:8px">
+          <a class="btn primary" href="assets/CV_Ali_EL_KAOUTAR_FR.pdf" download>CV (FR)</a>
+          <a class="btn" href="assets/CV_Ali_EL_KAOUTAR_EN.pdf" download>Resume (EN)</a>
+          <a class="btn" href="mailto:ali.el-kaoutar@etu.toulouse-inp.fr">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span data-i18n="mail">Contact</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="card fade">
+        <span class="chip live" data-i18n="demoChip">Démo en direct · TIPE</span>
+        <h2 style="margin-top:14px" data-i18n="demoTitle">Le voyageur de commerce, au Maroc</h2>
+        <p class="small" data-i18n="demoText">Une tournée qui passe une fois par chacune des 20 villes : d'abord l'heuristique du plus proche voisin, puis des améliorations 2-opt qui décroisent le circuit. Distances à vol d'oiseau.</p>
+        <div class="map">
+          <svg id="tsp" viewBox="0 0 520 450" role="img" aria-label="Tournée entre vingt villes du Maroc"></svg>
+        </div>
+        <div class="readout">
+          <span class="small" id="phase" aria-live="polite"></span>
+          <span class="km"><span id="km">0</span> <small>km</small></span>
+        </div>
+        <div class="readout" style="margin-top:8px">
+          <span></span>
+          <button class="btn" id="replay" type="button" data-i18n="replay">Relancer d'une autre ville</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parcours -->
+  <section id="parcours" class="section">
+    <div class="card fade">
+      <h2 data-i18n="hPath">Parcours académique</h2>
+      <p class="small" data-i18n="pathNote">Du plus récent au plus ancien.</p>
+      <div class="tl">
+        <div class="tli">
+          <span class="when" data-i18n="t1d">Sept. 2026 – aujourd'hui</span>
+          <h3 data-i18n="t1">ENSEEIHT — Toulouse INP</h3>
+          <p data-i18n="t1p">Cycle ingénieur, 1re année, département Sciences du Numérique (informatique). Toulouse, France.</p>
+        </div>
+        <div class="tli">
+          <span class="when" data-i18n="t2d">Sept. 2024 – juin 2026</span>
+          <h3 data-i18n="t2">Classes préparatoires aux grandes écoles</h3>
+          <p data-i18n="t2p">CPGE Reda Slaoui : deux années intensives en mathématiques et physique. TIPE sur le problème du voyageur de commerce. Agadir, Maroc.</p>
+        </div>
+        <div class="tli">
+          <span class="when" data-i18n="t3d">Juin 2024</span>
+          <h3 data-i18n="t3">Baccalauréat, mention Très bien</h3>
+          <p data-i18n="t3p">Lycée Al Qalam. Agadir, Maroc.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projets -->
+  <section id="projets" class="section">
+    <article class="card fade">
+      <div class="grid cols-2 project">
+        <div class="cover"><svg id="cover" viewBox="0 0 520 325" aria-hidden="true"></svg></div>
+        <div>
+          <span class="small" data-i18n="p1when">Projet de CPGE · 2024 – 2026</span>
+          <h2 style="margin-top:4px" data-i18n="p1">TIPE : le problème du voyageur de commerce</h2>
+          <p class="muted" style="margin:0" data-i18n="p1s">Trouver le plus court circuit passant une fois par chaque ville. Simple à énoncer, mais le nombre de tournées croît comme une factorielle : avec 20 villes, il y en a déjà plus de 10<sup>16</sup>.</p>
+          <ul>
+            <li data-i18n="p1a">Étude du problème et des méthodes exactes, et de leur limite pratique liée à la complexité factorielle.</li>
+            <li data-i18n="p1b">Implémentation et tests comparatifs de plusieurs heuristiques pour obtenir rapidement de bonnes solutions approchées.</li>
+            <li data-i18n="p1c">Application à un cas réel : un circuit reliant des villes du Maroc.</li>
+          </ul>
+          <div class="tags">
+            <span class="chip">Python</span><span class="chip" data-i18n="tAlgo">Algorithmique</span><span class="chip" data-i18n="tCx">Complexité</span><span class="chip" data-i18n="tHeur">Heuristiques</span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- Compétences -->
+  <section id="competences" class="section">
+    <div class="grid cols-2">
+      <div class="card fade">
+        <h2 data-i18n="hSkills">Compétences</h2>
+        <div class="skill-group">
+          <h3 data-i18n="sProg">Programmation</h3>
+          <div class="tags"><span class="chip">Python</span><span class="chip">C</span><span class="chip">Ada</span><span class="chip">MATLAB</span></div>
+        </div>
+        <div class="skill-group">
+          <h3 data-i18n="sInt">Centres d'intérêt</h3>
+          <div class="tags"><span class="chip" data-i18n="iAI">Intelligence artificielle</span><span class="chip" data-i18n="iSec">Cybersécurité</span><span class="chip" data-i18n="iOpt">Optimisation</span></div>
+        </div>
+      </div>
+      <div class="card fade">
+        <h2 data-i18n="hLang">Langues</h2>
+        <div class="skill-group">
+          <div class="tags">
+            <span class="chip" data-i18n="lAr">Arabe — langue maternelle</span>
+            <span class="chip" data-i18n="lFr">Français — courant</span>
+            <span class="chip" data-i18n="lEn">Anglais — courant</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sports -->
+  <section id="sports" class="section">
+    <div class="card fade">
+      <h2 data-i18n="hSport">Sports &amp; activités</h2>
+      <p class="muted" style="margin:0" data-i18n="sport">Escalade : un sport de résolution de problèmes, où l'on lit une voie avant de la grimper.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <small>© <span id="year"></span> Ali El Kaoutar — ENSEEIHT Sciences du Numérique</small>
+  <div class="actions">
+    <a class="btn" href="mailto:ali.el-kaoutar@etu.toulouse-inp.fr">ali.el-kaoutar@etu.toulouse-inp.fr</a>
+  </div>
+</footer>
+
+<script>
+(() => {
+  /* ===== Traductions ===== */
+  const EN = {
+    nHome: "Home", nPath: "Education", nProj: "Projects", nSkills: "Skills", nSport: "Sports",
+    chip: "Engineering student · ENSEEIHT, Computer Science",
+    intro: "First-year engineering student in Toulouse, passionate about artificial intelligence and cybersecurity.",
+    about1: "After earning my baccalauréat, I spent two years in classes préparatoires in Morocco. That path gave me a strong foundation in mathematics and physics, and taught me to work rigorously and autonomously under pressure.",
+    about2: "AI and cybersecurity increasingly shape each other: AI is changing how systems are defended and attacked, while securing those systems has become essential as they spread into everyday life.",
+    mail: "Contact",
+    demoChip: "Live demo · TIPE",
+    demoTitle: "The travelling salesman, in Morocco",
+    demoText: "A tour that visits each of the 20 cities once: first the nearest-neighbour heuristic, then 2-opt improvements that uncross the route. Straight-line distances.",
+    replay: "Restart from another city",
+    hPath: "Academic path", pathNote: "Most recent first.",
+    t1d: "Sep. 2026 – present", t1: "ENSEEIHT — Toulouse INP",
+    t1p: "Engineering degree, 1st year, Digital Sciences department (computer science). Toulouse, France.",
+    t2d: "Sep. 2024 – Jun. 2026", t2: "Classes préparatoires (preparatory classes)",
+    t2p: "CPGE Reda Slaoui: two intensive years of mathematics and physics. TIPE research project on the travelling salesman problem. Agadir, Morocco.",
+    t3d: "Jun. 2024", t3: "Baccalauréat, with highest honours", t3p: "Al Qalam High School. Agadir, Morocco.",
+    p1when: "Preparatory-class project · 2024 – 2026",
+    p1: "TIPE: the travelling salesman problem",
+    p1s: "Find the shortest round trip that visits every city once. Easy to state, but the number of tours grows factorially: with 20 cities there are already more than 10<sup>16</sup>.",
+    p1a: "Studied the problem and exact methods, and their practical limit due to factorial complexity.",
+    p1b: "Implemented and benchmarked several heuristics to quickly find good approximate solutions.",
+    p1c: "Applied them to a real case: a tour connecting cities in Morocco.",
+    tAlgo: "Algorithms", tCx: "Complexity", tHeur: "Heuristics",
+    hSkills: "Skills", sProg: "Programming", sInt: "Interests",
+    iAI: "Artificial intelligence", iSec: "Cybersecurity", iOpt: "Optimisation",
+    hLang: "Languages", lAr: "Arabic — native", lFr: "French — fluent", lEn: "English — fluent",
+    hSport: "Sports & activities",
+    sport: "Rock climbing: a problem-solving sport where you read a route before you climb it."
+  };
+  const PH = {
+    fr: { nn: "Plus proche voisin…", opt: "Améliorations 2-opt…", done: n => `Tournée finale · ${n} croisements supprimés` },
+    en: { nn: "Nearest neighbour…", opt: "2-opt improvements…", done: n => `Final tour · ${n} crossings removed` }
+  };
+  const FR = {};
+  document.querySelectorAll("[data-i18n]").forEach(el => FR[el.dataset.i18n] = el.innerHTML);
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  };
+
+  let lang = store.get("lang") || ((navigator.language || "fr").startsWith("fr") ? "fr" : "en");
+  const langSel = document.getElementById("langSel");
+  function applyLang() {
+    const dict = lang === "en" ? EN : FR;
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(el => { if (dict[el.dataset.i18n] !== undefined) el.innerHTML = dict[el.dataset.i18n]; });
+    const cvNav = document.getElementById("cvNav");
+    cvNav.href = `assets/CV_Ali_EL_KAOUTAR_${lang.toUpperCase()}.pdf`;
+    cvNav.textContent = lang === "en" ? "Resume (EN)" : "CV (FR)";
+    langSel.value = lang;
+    showPhase();
+  }
+  langSel.addEventListener("change", () => { lang = langSel.value; store.set("lang", lang); applyLang(); });
+
+  /* ===== Thème ===== */
+  const root = document.documentElement;
+  root.dataset.theme = store.get("theme") || "dark";
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+    store.set("theme", root.dataset.theme);
+  });
+
+  /* ===== Menu mobile + lien actif ===== */
+  const burger = document.getElementById("burger"), menu = document.getElementById("menu");
+  burger.addEventListener("click", () => {
+    const open = menu.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open);
+  });
+  menu.addEventListener("click", e => { if (e.target.closest("a")) { menu.classList.remove("open"); burger.setAttribute("aria-expanded", false); } });
+  const links = [...menu.querySelectorAll("a")];
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  document.querySelectorAll("main section[id]").forEach(s => spy.observe(s));
+
+  /* ===== Apparition des cartes ===== */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll(".fade").forEach(el => io.observe(el));
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ===== Voyageur de commerce ===== */
+  const CITIES = [
+    ["Tanger", 35.77, -5.80], ["Tétouan", 35.57, -5.37], ["Al Hoceïma", 35.25, -3.93],
+    ["Nador", 35.17, -2.93], ["Oujda", 34.68, -1.91], ["Taza", 34.21, -4.01],
+    ["Fès", 34.03, -5.00], ["Meknès", 33.89, -5.55], ["Rabat", 34.02, -6.84],
+    ["Casablanca", 33.57, -7.59], ["El Jadida", 33.25, -8.51], ["Safi", 32.30, -9.24],
+    ["Essaouira", 31.51, -9.77], ["Marrakech", 31.63, -8.01], ["Béni Mellal", 32.34, -6.36],
+    ["Errachidia", 31.93, -4.43], ["Ouarzazate", 30.92, -6.89], ["Agadir", 30.43, -9.60],
+    ["Tiznit", 29.70, -9.73], ["Guelmim", 28.99, -10.06]
+  ];
+  const HOME = 17, N = CITIES.length;
+  const rad = d => d * Math.PI / 180;
+  const D = CITIES.map(a => CITIES.map(b => {
+    const h = Math.sin(rad(b[1] - a[1]) / 2) ** 2 + Math.cos(rad(a[1])) * Math.cos(rad(b[1])) * Math.sin(rad(b[2] - a[2]) / 2) ** 2;
+    return 2 * 6371 * Math.asin(Math.sqrt(h));
+  }));
+  const len = t => t.reduce((s, c, i) => s + D[c][t[(i + 1) % t.length]], 0);
+
+  function project(W, H, padX, padY) {
+    const k = Math.cos(rad(32.4)), lonMin = -10.06, lonMax = -1.91, latMin = 28.99, latMax = 35.77;
+    const s = Math.min((W - 2 * padX) / ((lonMax - lonMin) * k), (H - 2 * padY) / (latMax - latMin));
+    const ox = (W - (lonMax - lonMin) * k * s) / 2, oy = (H - (latMax - latMin) * s) / 2;
+    return CITIES.map(([, lat, lon]) => [ox + (lon - lonMin) * k * s, oy + (latMax - lat) * s]);
+  }
+  const NS = "http://www.w3.org/2000/svg";
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const a in attrs) e.setAttribute(a, attrs[a]); parent.appendChild(e); return e; };
+  const pathD = (pts, t, upto = t.length) =>
+    t.slice(0, upto).map((c, i) => (i ? "L" : "M") + pts[c][0].toFixed(1) + " " + pts[c][1].toFixed(1)).join(" ") + (upto === t.length ? " Z" : "");
+
+  function nearest(s0) {
+    const t = [s0], used = new Set(t);
+    while (t.length < N) {
+      const l = t[t.length - 1]; let b = -1;
+      for (let j = 0; j < N; j++) if (!used.has(j) && (b < 0 || D[l][j] < D[l][b])) b = j;
+      t.push(b); used.add(b);
+    }
+    return t;
+  }
+  // Le générateur repère un croisement (i, j) ; l'appelant inverse le segment t[i+1..j]
+  const flip = (t, i, j) => t.splice(i + 1, j - i, ...t.slice(i + 1, j + 1).reverse());
+  function* twoOpt(t) {
+    let improved = true;
+    while (improved) {
+      improved = false;
+      for (let i = 0; i < N - 1 && !improved; i++) for (let j = i + 2; j < N && !improved; j++) {
+        const a = t[i], b = t[i + 1], c = t[j], d = t[(j + 1) % N];
+        if (a === d) continue;
+        if (D[a][c] + D[b][d] < D[a][b] + D[c][d] - 1e-9) {
+          yield [i, j];
+          improved = true;
+        }
+      }
+    }
+  }
+
+  // Couverture statique du projet (tournée finale)
+  (() => {
+    const svg = document.getElementById("cover"), pts = project(520, 325, 40, 22);
+    const t = nearest(HOME); for (const [i, j] of twoOpt(t)) flip(t, i, j);
+    mk("path", { class: "tour", d: pathD(pts, t) }, svg);
+    pts.forEach((p, i) => { const g = mk("g", { class: "city" + (i === HOME ? " home" : "") }, svg); mk("circle", { cx: p[0], cy: p[1], r: i === HOME ? 5 : 3.4 }, g); });
+  })();
+
+  // Démo animée
+  const svg = document.getElementById("tsp"), pts = project(520, 450, 60, 26);
+  const draft = mk("path", { class: "tour draft", d: "" }, svg);
+  const tour = mk("path", { class: "tour", d: "" }, svg);
+  const swapG = mk("g", {}, svg);
+  // Position de chaque étiquette : [décalage x, décalage y, ancrage]
+  const LABEL = {
+    "Tanger": [-8, 4, "end"], "Tétouan": [2, -9, "start"], "Al Hoceïma": [0, 17, "middle"],
+    "Nador": [0, -10, "middle"], "Oujda": [0, 17, "middle"], "Taza": [0, -10, "middle"], "Meknès": [-6, 17, "middle"],
+    "Rabat": [0, -10, "middle"], "Errachidia": [-8, 4, "end"]
+  };
+  CITIES.forEach(([name], i) => {
+    const g = mk("g", { class: "city" + (i === HOME ? " home" : "") }, svg);
+    mk("circle", { cx: pts[i][0], cy: pts[i][1], r: i === HOME ? 5 : 3.5 }, g);
+    const [dx, dy, anchor] = LABEL[name] || [8, 4, "start"];
+    mk("text", { x: pts[i][0] + dx, y: pts[i][1] + dy, "text-anchor": anchor }, g).textContent = name;
+  });
+
+  const phaseEl = document.getElementById("phase"), kmEl = document.getElementById("km");
+  let phase = "nn", removed = 0, start = HOME, runId = 0;
+  function showPhase() { phaseEl.textContent = phase === "done" ? PH[lang].done(removed) : PH[lang][phase]; }
+  const fmt = x => Math.round(x).toLocaleString(lang === "en" ? "en-GB" : "fr-FR");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const sleep = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+
+  async function run() {
+    const id = ++runId;
+    removed = 0; swapG.innerHTML = ""; draft.setAttribute("d", "");
+    const t = nearest(start);
+    phase = "nn"; showPhase();
+    for (let i = 2; i <= N; i++) {
+      if (id !== runId) return;
+      tour.setAttribute("d", pathD(pts, t, i));
+      let d = 0; for (let k = 0; k < i - 1; k++) d += D[t[k]][t[k + 1]];
+      kmEl.textContent = fmt(i === N ? len(t) : d);
+      await sleep(110);
+    }
+    await sleep(700);
+    phase = "opt"; showPhase();
+    draft.setAttribute("d", pathD(pts, t));
+    for (const [i, j] of twoOpt(t)) {
+      if (id !== runId) return;
+      const a = t[i], b = t[i + 1], c = t[j], d = t[(j + 1) % N];
+      swapG.innerHTML = "";
+      mk("line", { class: "swap", x1: pts[a][0], y1: pts[a][1], x2: pts[c][0], y2: pts[c][1] }, swapG);
+      mk("line", { class: "swap", x1: pts[b][0], y1: pts[b][1], x2: pts[d][0], y2: pts[d][1] }, swapG);
+      await sleep(380);
+      if (id !== runId) return;
+      flip(t, i, j); removed++;
+      tour.setAttribute("d", pathD(pts, t)); kmEl.textContent = fmt(len(t));
+      await sleep(320);
+    }
+    if (id !== runId) return;
+    swapG.innerHTML = ""; tour.setAttribute("d", pathD(pts, t)); kmEl.textContent = fmt(len(t));
+    phase = "done"; showPhase();
+  }
+  document.getElementById("replay").addEventListener("click", () => {
+    let n; do { n = Math.floor(Math.random() * N); } while (n === start);
+    start = n; run();
+  });
+
+  applyLang();
+  run();
+})();
+</script>
+</body>
+</html>
