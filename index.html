@@ -68,6 +68,8 @@
   .btn:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.22); }
   .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
   .btn.square { width: 40px; height: 40px; padding: 0; }
+  .btn.linkedin { background: #0a66c2; border-color: #0a66c2; color: #fff; }
+  .btn.linkedin:hover { background: #084b8f; border-color: #084b8f; }
   .btn svg { width: 17px; height: 17px; flex: none; }
   select { padding: 8px 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--elev); color: var(--text); cursor: pointer; }
 
@@ -106,6 +108,17 @@
   .readout { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
   .km { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
   .km small { font-size: 14px; font-weight: 400; color: var(--muted); }
+
+  /* ---- Elevator pitch ---- */
+  .pitch { align-items: center; }
+  .pitch-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--elev); }
+  .pitch-frame video { display: block; width: 100%; height: 100%; object-fit: contain; background: #000; }
+  .pitch-empty { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 20px; color: var(--muted); border: 2px dashed var(--border); border-radius: 14px; }
+  .pitch-empty svg { width: 42px; height: 42px; color: var(--accent); }
+  .pitch-frame.missing video { display: none; }
+  .pitch-frame.missing .pitch-empty { display: flex; }
+  .pitch-steps { margin: 14px 0 0; padding-left: 1.1em; color: var(--muted); }
+  .pitch-steps li { margin-bottom: 4px; }
 
   /* ---- Frise ---- */
   .tl { position: relative; padding-left: 26px; margin-top: 8px; }
@@ -171,6 +184,7 @@
     <nav id="menu" aria-label="Principale">
       <ul>
         <li><a href="#home" data-i18n="nHome">Accueil</a></li>
+        <li><a href="#pitch">Pitch</a></li>
         <li><a href="#parcours" data-i18n="nPath">Parcours</a></li>
         <li><a href="#projets" data-i18n="nProj">Projets</a></li>
         <li><a href="#competences" data-i18n="nSkills">Compétences</a></li>
@@ -179,6 +193,7 @@
     </nav>
     <div class="ctrls">
       <a class="btn primary cv-nav" id="cvNav" href="assets/CV_Ali_EL_KAOUTAR_FR.pdf" download>CV (FR)</a>
+      <a class="btn square linkedin linkedin-link" href="#" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM.5 8h4.9v15.5H.5V8zm7.8 0h4.7v2.1h.07c.65-1.2 2.25-2.5 4.63-2.5 4.95 0 5.86 3.26 5.86 7.5v8.4h-4.9v-7.45c0-1.78-.03-4.07-2.48-4.07-2.48 0-2.86 1.94-2.86 3.94v7.58H8.3V8z"/></svg></a>
       <button class="btn square" id="themeBtn" type="button" aria-label="Basculer le thème">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
       </button>
@@ -211,6 +226,7 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
             <span data-i18n="mail">Contact</span>
           </a>
+          <a class="btn linkedin linkedin-link" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM.5 8h4.9v15.5H.5V8zm7.8 0h4.7v2.1h.07c.65-1.2 2.25-2.5 4.63-2.5 4.95 0 5.86 3.26 5.86 7.5v8.4h-4.9v-7.45c0-1.78-.03-4.07-2.48-4.07-2.48 0-2.86 1.94-2.86 3.94v7.58H8.3V8z"/></svg><span>LinkedIn</span></a>
         </div>
       </div>
 
@@ -228,6 +244,33 @@
         <div class="readout" style="margin-top:8px">
           <span></span>
           <button class="btn" id="replay" type="button" data-i18n="replay">Relancer d'une autre ville</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Elevator pitch -->
+  <section id="pitch" class="section">
+    <div class="card fade">
+      <div class="grid cols-2 pitch">
+        <div class="pitch-frame" id="pitchFrame">
+          <video id="pitchVideo" controls preload="metadata" playsinline>
+            <source src="assets/elevator.mp4" type="video/mp4">
+          </video>
+          <div class="pitch-empty">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 10 6-3v10l-6-3z"/></svg>
+            <span data-i18n="pitchSoon">Vidéo bientôt disponible</span>
+          </div>
+        </div>
+        <div>
+          <span class="chip" data-i18n="pitchChip">Vidéo · environ 2 min 30</span>
+          <h2 style="margin-top:14px">Elevator pitch</h2>
+          <p class="muted" style="margin:0" data-i18n="pitchText">En deux minutes et demie : qui je suis aujourd'hui, d'où je viens, les trois profils qui m'inspirent et la mobilité internationale que je vise pour ma dernière année.</p>
+          <ol class="pitch-steps">
+            <li data-i18n="ps1">Présent : élève ingénieur, entre IA et cybersécurité</li>
+            <li data-i18n="ps2">Passé : bac, classes préparatoires, TIPE</li>
+            <li data-i18n="ps3">Futur : trois modèles et trois destinations</li>
+          </ol>
         </div>
       </div>
     </div>
@@ -321,11 +364,27 @@
   <small>© <span id="year"></span> Ali El Kaoutar — ENSEEIHT Sciences du Numérique</small>
   <div class="actions">
     <a class="btn" href="mailto:ali.el-kaoutar@etu.toulouse-inp.fr">ali.el-kaoutar@etu.toulouse-inp.fr</a>
+    <a class="btn linkedin linkedin-link" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0zM.5 8h4.9v15.5H.5V8zm7.8 0h4.7v2.1h.07c.65-1.2 2.25-2.5 4.63-2.5 4.95 0 5.86 3.26 5.86 7.5v8.4h-4.9v-7.45c0-1.78-.03-4.07-2.48-4.07-2.48 0-2.86 1.94-2.86 3.94v7.58H8.3V8z"/></svg><span>LinkedIn</span></a>
   </div>
 </footer>
 
 <script>
 (() => {
+  /* ===== À MODIFIER : colle ici le lien de ton profil LinkedIn ===== */
+  const LINKEDIN = "https://www.linkedin.com/in/ali-el-kaoutar";
+
+  document.querySelectorAll(".linkedin-link").forEach(a => a.href = LINKEDIN);
+
+  /* Si la vidéo n'est pas encore dans assets/, on affiche un emplacement vide */
+  const pitchFrame = document.getElementById("pitchFrame");
+  const pitchVideo = document.getElementById("pitchVideo");
+  const markMissing = () => {
+    if (pitchVideo.readyState === 0 && pitchVideo.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) pitchFrame.classList.add("missing");
+  };
+  pitchVideo.querySelector("source").addEventListener("error", () => pitchFrame.classList.add("missing"));
+  pitchVideo.addEventListener("loadedmetadata", () => pitchFrame.classList.remove("missing"));
+  setTimeout(markMissing, 2000);
+
   /* ===== Traductions ===== */
   const EN = {
     nHome: "Home", nPath: "Education", nProj: "Projects", nSkills: "Skills", nSport: "Sports",
@@ -334,6 +393,12 @@
     about1: "After earning my baccalauréat, I spent two years in classes préparatoires in Morocco. That path gave me a strong foundation in mathematics and physics, and taught me to work rigorously and autonomously under pressure.",
     about2: "AI and cybersecurity increasingly shape each other: AI is changing how systems are defended and attacked, while securing those systems has become essential as they spread into everyday life.",
     mail: "Contact",
+    pitchSoon: "Video coming soon",
+    pitchChip: "Video · about 2 min 30",
+    pitchText: "In two and a half minutes: who I am today, where I come from, the three people who inspire me, and the international mobility I'm aiming for in my final year.",
+    ps1: "Present: engineering student, between AI and cybersecurity",
+    ps2: "Past: baccalauréat, preparatory classes, TIPE",
+    ps3: "Future: three role models and three destinations",
     demoChip: "Live demo · TIPE",
     demoTitle: "The travelling salesman, in Morocco",
     demoText: "A tour that visits each of the 20 cities once: first the nearest-neighbour heuristic, then 2-opt improvements that uncross the route. Straight-line distances.",
